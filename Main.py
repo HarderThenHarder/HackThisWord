@@ -16,7 +16,7 @@ def main():
 
     bg = pygame.image.load("img/word_bg.jpg")
     bg = pygame.transform.scale(bg, whole_map_size)
-    start_draw_map_pos = [-100, -100]
+    start_draw_map_pos = [-400 * scale, -100 * scale]
     map_moving = False
     last_mouse_pos = []
 
