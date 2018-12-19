@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from DrawScene import DrawScene
 
 
 def main():
@@ -8,8 +9,9 @@ def main():
 
     # whole map size is [2560, 1376]
     scale = 0.8
+    map_scale = 1
     SCREEN_WIDTH_HEIGHT = [int(1920 * scale), int(1080 * scale)]
-    whole_map_size = [int(2560 * scale), int(1376 * scale)]
+    whole_map_size = [int(2560 * scale * map_scale), int(1376 * scale * map_scale)]
 
     screen = pygame.display.set_mode(SCREEN_WIDTH_HEIGHT)
     pygame.display.set_caption("Hack This Word v1.0")
@@ -23,7 +25,12 @@ def main():
     while True:
         clock.tick(30)
 
-        screen.blit(bg, start_draw_map_pos)
+        # scale the map_size
+        whole_map_size = [int(2560 * scale * map_scale), int(1376 * scale * map_scale)]
+        bg = pygame.transform.scale(bg, whole_map_size)
+
+        # Draw Scene
+        DrawScene.draw_scene(screen, bg, start_draw_map_pos, scale)
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -33,6 +40,10 @@ def main():
                 if event.button == 1:
                     map_moving = True
                     last_mouse_pos = event.pos
+                elif event.button == 4:
+                    map_scale = 1.1
+                elif event.button == 5:
+                    map_scale = 1
             if event.type == MOUSEBUTTONUP:
                 if event.button == 1:
                     map_moving = False
