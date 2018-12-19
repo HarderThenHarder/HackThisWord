@@ -1,5 +1,8 @@
 import pygame
 from pygame.locals import *
+
+from AreaConfig import AreaConfig
+from Country import Country
 from DrawScene import DrawScene
 
 
@@ -22,6 +25,9 @@ def main():
     map_moving = False
     last_mouse_pos = []
 
+    # Create Country
+    area_config = AreaConfig(scale)
+
     while True:
         clock.tick(30)
 
@@ -30,7 +36,7 @@ def main():
         bg = pygame.transform.scale(bg, whole_map_size)
 
         # Draw Scene
-        DrawScene.draw_scene(screen, bg, start_draw_map_pos, scale)
+        DrawScene.draw_scene(screen, bg, start_draw_map_pos, scale, area_config)
 
         for event in pygame.event.get():
             if event.type == QUIT:
