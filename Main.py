@@ -8,12 +8,12 @@ def main():
     clock = pygame.time.Clock()
 
     # whole map size is [2560, 1376]
-    scale = 0.8
+    scale = 1
     map_scale = 1
     SCREEN_WIDTH_HEIGHT = [int(1920 * scale), int(1080 * scale)]
     whole_map_size = [int(2560 * scale * map_scale), int(1376 * scale * map_scale)]
 
-    screen = pygame.display.set_mode(SCREEN_WIDTH_HEIGHT)
+    screen = pygame.display.set_mode(SCREEN_WIDTH_HEIGHT, RESIZABLE, 32)
     pygame.display.set_caption("Hack This Word v1.0")
 
     bg = pygame.image.load("img/word_bg.jpg")
@@ -40,13 +40,18 @@ def main():
                 if event.button == 1:
                     map_moving = True
                     last_mouse_pos = event.pos
-                elif event.button == 4:
-                    map_scale = 1.1
-                elif event.button == 5:
-                    map_scale = 1
+                # elif event.button == 4:
+                #     map_scale = 1.1
+                # elif event.button == 5:
+                #     map_scale = 1
+
             if event.type == MOUSEBUTTONUP:
                 if event.button == 1:
                     map_moving = False
+
+            if event.type == VIDEORESIZE:
+                SCREEN_WIDTH_HEIGHT = event.size
+                screen = pygame.display.set_mode(SCREEN_WIDTH_HEIGHT, RESIZABLE, 32)
 
         if map_moving:
             x_offset = pygame.mouse.get_pos()[0] - last_mouse_pos[0]
