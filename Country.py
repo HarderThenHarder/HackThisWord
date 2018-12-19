@@ -11,9 +11,12 @@ class Country(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.scale = scale
         self.name = name
+        self.width = 10
+        self.height = 10
+        self.image = pygame.Surface([int(self.width * scale), int(self.height * scale)])
         self.pos = pos
-        self.image = pygame.Surface([int(10 * scale), int(10 * scale)])
-        self.color = (0, 131, 114)
+        self.center = [int(self.pos[0] + self.width / 2 * scale), int(self.pos[1] + self.height / 2 * scale)]
+        self.color = (100, 0, 0)
         self.image.fill(self.color)
         self.hacker_list = []
         self.create_hacker_group()

@@ -1,4 +1,5 @@
 from Pencil import Pencil
+import random
 
 
 class DrawScene:
@@ -18,6 +19,14 @@ class DrawScene:
 
         for country in area_config.country_list:
             screen.blit(country.image, [start_draw_map_pos[0] + country.pos[0], start_draw_map_pos[1] + country.pos[1]])
-            Pencil.write_text(screen, country.name, [start_draw_map_pos[0] + country.pos[0], start_draw_map_pos[1] + country.pos[1] - 25 * scale], 25 * scale, country.color)
-            # for hacker in country.hacker_list:
-            #     screen.blit(hacker.image, [start_draw_map_pos[0] + hacker.pos[0], start_draw_map_pos[1] + hacker.pos[1]])
+            Pencil.write_text(screen, country.name, [start_draw_map_pos[0] + country.pos[0],
+                                                     start_draw_map_pos[1] + country.pos[1] - 25 * scale], 25 * scale,
+                              country.color)
+
+        for hacker in area_config.country_list[0].hacker_list:
+            if hacker.target:
+                color = (0, 180, 0)
+                Pencil.draw_line(screen,
+                                 [start_draw_map_pos[0] + hacker.pos[0], start_draw_map_pos[1] + hacker.pos[1]],
+                                 [start_draw_map_pos[0] + hacker.target.center[0],
+                                  start_draw_map_pos[1] + hacker.target.center[1]], color, width=2)

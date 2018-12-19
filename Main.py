@@ -1,9 +1,11 @@
 import pygame
 from pygame.locals import *
-
+import time
 from AreaConfig import AreaConfig
-from Country import Country
 from DrawScene import DrawScene
+from Pencil import Pencil
+from Timer import Timer
+from Trigger import Trigger
 
 
 def main():
@@ -28,8 +30,17 @@ def main():
     # Create Country
     area_config = AreaConfig(scale)
 
+    # Create constant value
+    timer = Timer()
+    timer.set_time(0, 0, 0)
+    tick_elapsed = 0
+
+    # Create Trigger
+    trigger = Trigger(timer, area_config)
+
     while True:
         clock.tick(30)
+        since = time.time()
 
         # scale the map_size
         whole_map_size = [int(2560 * scale * map_scale), int(1376 * scale * map_scale)]
@@ -37,6 +48,10 @@ def main():
 
         # Draw Scene
         DrawScene.draw_scene(screen, bg, start_draw_map_pos, scale, area_config)
+        time_size = int(38 * scale)
+        Pencil.write_text(screen, "%02d:%02d:%02d" % (timer.get_hour(), timer.get_minute(), timer.get_second()),
+                          [(SCREEN_WIDTH_HEIGHT[0] - time_size * 5) * scale, 20 * scale], font_size=time_size,
+                          color=(230, 230, 230))
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -50,6 +65,10 @@ def main():
                 #     map_scale = 1.1
                 # elif event.button == 5:
                 #     map_scale = 1
+
+            if event.type == KEYDOWN:
+                if event.key == K_RIGHT:
+                    pass
 
             if event.type == MOUSEBUTTONUP:
                 if event.button == 1:
@@ -68,6 +87,12 @@ def main():
             if SCREEN_WIDTH_HEIGHT[1] - whole_map_size[1] <= start_draw_map_pos[1] + y_offset <= 0:
                 start_draw_map_pos[1] += y_offset
 
+        tick_elapsed += time.time() - since
+        if tick_elapsed >= 1:
+            timer.elapse_one_second()
+            tick_elapsed = 0
+
+        trigger.update()
         pygame.display.update()
 
 

@@ -15,7 +15,7 @@ class Hacker(pygame.sprite.Sprite):
         self.country = country
         self.HP = 100
         self.target = None
-        self.pos = country.pos
+        self.pos = [(country.pos[0] + random.random() * 20 - 10) * scale, (country.pos[1] + random.random() * 20 - 10) * scale]
 
     def set_target(self, target):
         self.target = target
