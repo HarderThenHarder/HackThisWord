@@ -11,5 +11,6 @@ class Trigger:
 
     def update(self):
         second = self.timer.get_second()
-        self.area_config.country_list[0].hacker_list[second].set_target(self.area_config.country_list[1])
+        if second < len(self.area_config.site_list[0].hacker_list):
+            self.area_config.site_list[0].hacker_list[second].set_target(self.area_config.site_list[1])
 
