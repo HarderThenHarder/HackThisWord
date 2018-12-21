@@ -7,6 +7,11 @@ import numpy as np
 class DataBase:
 
     def __init__(self, X_train, y_train):
+        """
+        You Need to input the example X_train & y_train, the value doesn't matter, It will drop the input value, Just use the shade.
+        :param X_train:
+        :param y_train:
+        """
         self._X_train = np.array(X_train)
         self._y_train = np.array(y_train)
 
