@@ -50,7 +50,7 @@ class Trigger:
             self.area_config.site_list[1].reset_defender_group()
             # kill all hackers
             for hacker in self.area_config.site_list[0].hacker_list:
-                hacker.set_target(None)
+                hacker.retreat()
             self.counter = 0
 
         self.normal_update(interval)

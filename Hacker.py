@@ -34,6 +34,14 @@ class Hacker(pygame.sprite.Sprite):
         self.state = "OFF"
         self.duration = [-1, -1]
 
+    def retreat(self):
+        """
+        retreat because target change the defender, so this result don't used for learning
+        """
+        self.target = None
+        self.state = "OFF"
+        self.duration = [-1, -1]
+
     def update(self, *args):
         # !!!!!!!!!!!!!! is "ON " ———— with SPACE after !!!!!!!!!!!!!! #
         if self.state == "ON ":
