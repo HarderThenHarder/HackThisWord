@@ -1,17 +1,17 @@
 """
 @author: P_k_y
 """
-from Site import Country
+from Site import Site
 
 
 class AreaConfig:
 
-    def __init__(self, scale):
+    def __init__(self, scale, timer):
         self.site_list = []
 
-        siteA = Country("A", [1620 * scale, 350 * scale], scale)
+        siteA = Site("A", [1620 * scale, 350 * scale], scale, timer)
         self.site_list.append(siteA)
-        siteB = Country("B", [850 * scale, 900 * scale], scale)
+        siteB = Site("B", [850 * scale, 900 * scale], scale, timer)
         self.site_list.append(siteB)
 
 

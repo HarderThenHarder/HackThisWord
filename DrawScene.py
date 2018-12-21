@@ -15,7 +15,7 @@ class DrawScene:
         Pencil.write_text(screen, "Defense State", [int(10 * scale), int(420 * scale)], font_size=18, color=text_color)
         Pencil.draw_rect(screen, [int(10 * scale), int(460 * scale), int(270 * scale), int(260 * scale)],
                          color=text_color, width=1)
-        Pencil.draw_rect(screen,  [int(20 * scale), int(470 * scale), int(60 * scale), int(30 * scale)],
+        Pencil.draw_rect(screen, [int(20 * scale), int(470 * scale), int(60 * scale), int(30 * scale)],
                          color=(150, 0, 0), width=0)
         Pencil.write_text(screen, "RED   Defender" + " %d" % area_config.site_list[1].red_defender_num,
                           [int(100 * scale), int(475 * scale)], font_size=19, color=(250, 0, 0))
@@ -33,11 +33,15 @@ class DrawScene:
         Pencil.draw_rect(screen, [int(10 * scale), int(790 * scale), int(270 * scale), int(260 * scale)],
                          color=text_color, width=1)
         for i in range(len(area_config.site_list[0].hacker_list)):
+            if area_config.site_list[0].hacker_list[i].duration == [-1, -1]:
+                duration = "--:--"
+            else:
+                duration = "%02d:%02d" % (area_config.site_list[0].hacker_list[i].duration[0], area_config.site_list[0].hacker_list[i].duration[1])
             Pencil.write_text(screen,
-                              "Hacker%2d:   " % (i + 1) + area_config.site_list[0].hacker_list[i].state + "   " +
-                              area_config.site_list[0].hacker_list[i].duration,
-                              [int(22 * scale), int(800 + 20 * i * scale)], font_size=18,
-                              color=area_config.site_list[0].hacker_list[i].color)
+                              "Hacker%2d:   " % (i + 1) + area_config.site_list[0].hacker_list[i].state + "   " + duration,
+                              [int(22 * scale), int(800 + 20 * i * scale)], font_size=18, color=area_config.site_list[0].hacker_list[i].color)
+        Pencil.write_text(screen, "Max Duration:     %05d" % area_config.site_list[0].max_duration, [int(22 * scale), int(800 + 20 * len(area_config.site_list[0].hacker_list * scale))],
+                          font_size=18, color=(230, 230, 230))
 
         # Sites & Hackers
         for site in area_config.site_list:
@@ -52,3 +56,6 @@ class DrawScene:
                                  [start_draw_map_pos[0] + hacker.pos[0], start_draw_map_pos[1] + hacker.pos[1]],
                                  [start_draw_map_pos[0] + hacker.target.center[0],
                                   start_draw_map_pos[1] + hacker.target.center[1]], hacker.color, width=2)
+
+        for defender in area_config.site_list[1].defender_list:
+            screen.blit(defender.image, [start_draw_map_pos[0] + defender.pos[0], start_draw_map_pos[1] + defender.pos[1]])

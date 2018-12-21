@@ -5,6 +5,7 @@
 
 class Timer:
     def __init__(self):
+        self._millisecond = 0
         self._second = 0
         self._minute = 0
         self._hour = 0
@@ -27,6 +28,9 @@ class Timer:
             self._minute = 0
         if self._hour == 24:
             self._hour = 0
+
+    def get_millisecond(self):
+        return self._millisecond
 
     def get_second(self):
         return self._second

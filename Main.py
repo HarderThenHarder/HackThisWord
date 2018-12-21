@@ -27,13 +27,16 @@ def main():
     map_moving = False
     last_mouse_pos = []
 
-    # Create Country
-    area_config = AreaConfig(scale)
-
     # Create constant value
     timer = Timer()
     timer.set_time(0, 0, 0)
     tick_elapsed = 0
+    ticks = 0
+    interval = 0
+    interval_speed = 3
+
+    # Create Site
+    area_config = AreaConfig(scale, timer)
 
     # Create Trigger
     trigger = Trigger(timer, area_config)
@@ -92,7 +95,13 @@ def main():
             timer.elapse_one_second()
             tick_elapsed = 0
 
-        trigger.update()
+        ticks += 1
+        if ticks % interval_speed == 0:
+            interval += 1
+            ticks %= 1000
+            interval %= 100
+
+        trigger.update(interval)
         pygame.display.update()
 
 
