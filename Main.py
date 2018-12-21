@@ -2,7 +2,9 @@ import pygame
 from pygame.locals import *
 import time
 from AreaConfig import AreaConfig
+from DataBase import DataBase
 from DrawScene import DrawScene
+from LinearRegression import LinearRegression
 from Pencil import Pencil
 from Timer import Timer
 from Trigger import Trigger
@@ -18,14 +20,18 @@ def main():
     SCREEN_WIDTH_HEIGHT = [int(1920 * scale), int(1080 * scale)]
     whole_map_size = [int(2560 * scale * map_scale), int(1376 * scale * map_scale)]
 
+    # Create background
     screen = pygame.display.set_mode(SCREEN_WIDTH_HEIGHT, RESIZABLE, 32)
     pygame.display.set_caption("Hack This Word v1.0")
-
     bg = pygame.image.load("img/word_bg.jpg")
     bg = pygame.transform.scale(bg, whole_map_size)
     start_draw_map_pos = [-400 * scale, -100 * scale]
     map_moving = False
     last_mouse_pos = []
+
+    # Create DataBase and Learning Model
+    data_base = DataBase([0, 0, 0], [0])
+    lin_reg = LinearRegression()
 
     # Create constant value
     timer = Timer()
@@ -36,7 +42,7 @@ def main():
     interval_speed = 3
 
     # Create Site
-    area_config = AreaConfig(scale, timer)
+    area_config = AreaConfig(scale, timer, lin_reg)
 
     # Create Trigger
     trigger = Trigger(timer, area_config)

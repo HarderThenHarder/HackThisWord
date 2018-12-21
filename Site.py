@@ -10,7 +10,7 @@ import random
 
 class Site(pygame.sprite.Sprite):
 
-    def __init__(self, name, pos, scale, timer):
+    def __init__(self, name, pos, scale, timer, lin_reg):
         pygame.sprite.Sprite.__init__(self)
         self.scale = scale
         self.name = name
@@ -22,6 +22,7 @@ class Site(pygame.sprite.Sprite):
         self.center = [int(self.pos[0] + self.width / 2 * scale), int(self.pos[1] + self.height / 2 * scale)]
         self.color = (100, 0, 0)
         self.image.fill(self.color)
+        self.lin_reg = lin_reg
         self.hacker_list = []
         self.create_hacker_group()
         self.defender_list = []
@@ -33,7 +34,7 @@ class Site(pygame.sprite.Sprite):
 
     def create_hacker_group(self):
         for i in range(10):
-            hacker = Hacker(self, self.scale, self.timer)
+            hacker = Hacker(self, self.scale, self.timer, self.lin_reg)
             self.hacker_list.append(hacker)
 
     def create_defender_group(self):

@@ -7,12 +7,13 @@ import pygame
 
 class Hacker(pygame.sprite.Sprite):
 
-    def __init__(self, site, scale, timer):
+    def __init__(self, site, scale, timer, lin_reg):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface([3, 3])
         self.color = (100, 0, 0)
         self.image.fill(self.color)
         self.site = site
+        self.lin_reg = lin_reg
         self.timer = timer
         self.HP = 100
         self.target = None

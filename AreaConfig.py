@@ -6,12 +6,12 @@ from Site import Site
 
 class AreaConfig:
 
-    def __init__(self, scale, timer):
+    def __init__(self, scale, timer, lin_reg):
         self.site_list = []
 
-        siteA = Site("A", [1620 * scale, 350 * scale], scale, timer)
+        siteA = Site("A", [1620 * scale, 350 * scale], scale, timer, lin_reg)
         self.site_list.append(siteA)
-        siteB = Site("B", [850 * scale, 900 * scale], scale, timer)
+        siteB = Site("B", [850 * scale, 900 * scale], scale, timer, lin_reg)
         self.site_list.append(siteB)
 
 
