@@ -37,6 +37,7 @@ class Site(pygame.sprite.Sprite):
             self.hacker_list.append(hacker)
 
     def create_defender_group(self):
+        self.defender_list = []
         for i in range(self.red_defender_num):
             defender = Defender("RED", self, self.scale, (200, 0, 0), 0.03)
             self.defender_list.append(defender)
@@ -46,6 +47,12 @@ class Site(pygame.sprite.Sprite):
         for i in range(self.blue_defender_num):
             defender = Defender("BLUE", self, self.scale, (0, 0, 200), 0.01)
             self.defender_list.append(defender)
+
+    def reset_defender_group(self):
+        self.red_defender_num = random.randint(0, 10)
+        self.green_defender_num = random.randint(0, 10)
+        self.blue_defender_num = random.randint(0, 10)
+        self.create_defender_group()
 
     def set_max_duration(self):
         for hacker in self.hacker_list:

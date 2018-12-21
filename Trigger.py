@@ -9,6 +9,7 @@ class Trigger:
         self.timer = timer
         self.area_config = area_config
         self.last_time = [timer.get_minute(), timer.get_second()]
+        self.counter = 0
 
     def second_update(self):
         for defender in self.area_config.site_list[1].defender_list:
@@ -39,20 +40,18 @@ class Trigger:
         last_time_num = self.last_time[0] * 60 + self.last_time[1]
         now_num = now[0] * 60 + now[1]
 
+        # per second update
         if now_num - last_time_num == 1:
             self.second_update()
+            self.counter += 1
+
+        # 20 seconds is an iteration
+        if self.counter == 20:
+            self.area_config.site_list[1].reset_defender_group()
+            # kill all hackers
+            for hacker in self.area_config.site_list[0].hacker_list:
+                hacker.set_target(None)
+            self.counter = 0
 
         self.normal_update(interval)
-
         self.last_time = now
-
-class SecondTrigger:
-
-    def __init__(self, timer, area_config):
-        self.timer = timer
-        self.area_config = area_config
-
-    def update(self):
-        # update Defender
-        for defender in self.area_config.site_list[1].defender_list:
-            defender.kill_intruder(self.area_config.site_list[0].hacker_list)
