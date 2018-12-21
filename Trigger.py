@@ -15,8 +15,16 @@ class Trigger:
             defender.kill_intruder(self.area_config.site_list[0].hacker_list)
 
     def normal_update(self, interval):
-        if interval < len(self.area_config.site_list[0].hacker_list):
-            self.area_config.site_list[0].hacker_list[interval].set_target(self.area_config.site_list[1])
+        # Reset target
+        # if interval < len(self.area_config.site_list[0].hacker_list):
+        #     self.area_config.site_list[0].hacker_list[interval].set_target(self.area_config.site_list[1])
+        all_hacker_has_no_target = True
+        for hacker in self.area_config.site_list[0].hacker_list:
+            if hacker.target:
+                all_hacker_has_no_target = False
+        if all_hacker_has_no_target:
+            for hacker in self.area_config.site_list[0].hacker_list:
+                hacker.set_target(self.area_config.site_list[1])
 
         # update Hacker
         for hacker in self.area_config.site_list[0].hacker_list:
