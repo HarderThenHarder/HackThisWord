@@ -57,5 +57,5 @@ class DrawScene:
                                  [start_draw_map_pos[0] + hacker.target.center[0],
                                   start_draw_map_pos[1] + hacker.target.center[1]], hacker.color, width=2)
 
-        for defender in area_config.site_list[1].defender_list:
+        for defender in (area_config.site_list[1].defender_list + area_config.site_list[2].defender_list):
             screen.blit(defender.image, [start_draw_map_pos[0] + defender.pos[0], start_draw_map_pos[1] + defender.pos[1]])

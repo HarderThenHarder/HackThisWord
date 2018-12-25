@@ -13,5 +13,7 @@ class AreaConfig:
         self.site_list.append(siteA)
         siteB = Site("B", [850 * scale, 900 * scale], scale, timer, database)
         self.site_list.append(siteB)
+        siteC = Site("C", [2020 * scale, 1050 * scale], scale, timer, database)
+        self.site_list.append(siteC)
 
 
