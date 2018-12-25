@@ -7,7 +7,7 @@ import pygame
 
 class Defender(pygame.sprite.Sprite):
 
-    def __init__(self, name, site, scale, color, kill_probability):
+    def __init__(self, name, site, scale, color, kill_probability, database):
         pygame.sprite.Sprite.__init__(self)
         self.name = name
         self.image = pygame.Surface([5, 5])
@@ -19,6 +19,7 @@ class Defender(pygame.sprite.Sprite):
         self.pos = []
         self.set_pos()
         self.kill_probability = kill_probability
+        self.database = database
 
     def set_pos(self):
         x_offset = random.random() * 40 - 20
@@ -29,7 +30,9 @@ class Defender(pygame.sprite.Sprite):
         for hacker in hacker_list:
             rand = random.random()
             if rand < self.kill_probability:
+                self.database.update_coefficient([self.site.red_defender_num, self.site.green_defender_num, self.site.blue_defender_num], hacker.duration)
                 hacker.be_killed()
+                print(self.database.defender_coefficient)
 
     def update(self, *args):
         pass

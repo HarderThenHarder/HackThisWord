@@ -19,6 +19,8 @@ class Trigger:
         # Reset target
         # if interval < len(self.area_config.site_list[0].hacker_list):
         #     self.area_config.site_list[0].hacker_list[interval].set_target(self.area_config.site_list[1])
+
+        # if all hacker has no target, launch a new attack
         all_hacker_has_no_target = True
         for hacker in self.area_config.site_list[0].hacker_list:
             if hacker.target:

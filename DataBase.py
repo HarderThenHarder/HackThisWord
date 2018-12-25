@@ -1,39 +1,31 @@
 """
 @author: P_k_y
 """
-import numpy as np
 
 
 class DataBase:
 
-    def __init__(self, X_train, y_train):
-        """
-        You Need to input the example X_train & y_train, the value doesn't matter, It will drop the input value, Just use the shade.
-        :param X_train:
-        :param y_train:
-        """
-        self._X_train = np.array(X_train)
-        self._y_train = np.array(y_train)
+    def __init__(self):
+        self.defender_coefficient = [0, 0, 0]
 
-    def add_data(self, data):
-        x_train = data[:-1]
-        y_train = data[-1]
-        self._X_train = np.vstack([self._X_train, np.array(x_train)])
-        y_train_list = list(self._y_train)
-        y_train_list.append(y_train)
-        self._y_train = np.array(y_train_list)
+    def update_coefficient(self, defender_num_list, duration_time):
+        if duration_time == [-1, -1]:
+            duration_time_num = 0
+        else:
+            duration_time_num = duration_time[0] * 60 + duration_time[1]
 
-    def get_X_train(self):
-        return self._X_train[1:][:]
-
-    def get_y_train(self):
-        return self._y_train[1:]
+        for i in range(len(self.defender_coefficient)):
+            self.defender_coefficient[i] += (duration_time_num * defender_num_list[i] / sum(defender_num_list))
+        # normalized coefficient
+        total_num = sum(self.defender_coefficient)
+        if total_num:
+            for i in range(len(self.defender_coefficient)):
+                self.defender_coefficient[i] /= total_num
 
 
 if __name__ == "__main__":
-    data_base = DataBase([0], [0])
-    data_base.add_data([1, 1])
-    data_base.add_data([2, 2])
-    data_base.add_data([3, 3])
+    data_base = DataBase()
+    data_base.update_coefficient([3, 2, 7], 18)
+    data_base.update_coefficient([3, 16, 2], 38)
 
-    print(data_base.get_X_train())
+    print(data_base.defender_coefficient)

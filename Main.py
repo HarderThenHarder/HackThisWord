@@ -4,7 +4,6 @@ import time
 from AreaConfig import AreaConfig
 from DataBase import DataBase
 from DrawScene import DrawScene
-from LinearRegression import LinearRegression
 from Pencil import Pencil
 from Timer import Timer
 from Trigger import Trigger
@@ -30,8 +29,7 @@ def main():
     last_mouse_pos = []
 
     # Create DataBase and Learning Model
-    data_base = DataBase([0, 0, 0], [0])
-    lin_reg = LinearRegression()
+    data_base = DataBase()
 
     # Create constant value
     timer = Timer()
@@ -42,7 +40,7 @@ def main():
     interval_speed = 3
 
     # Create Site
-    area_config = AreaConfig(scale, timer, lin_reg)
+    area_config = AreaConfig(scale, timer, data_base)
 
     # Create Trigger
     trigger = Trigger(timer, area_config)

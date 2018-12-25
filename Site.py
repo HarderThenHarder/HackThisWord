@@ -10,7 +10,7 @@ import random
 
 class Site(pygame.sprite.Sprite):
 
-    def __init__(self, name, pos, scale, timer, lin_reg):
+    def __init__(self, name, pos, scale, timer, database):
         pygame.sprite.Sprite.__init__(self)
         self.scale = scale
         self.name = name
@@ -22,38 +22,38 @@ class Site(pygame.sprite.Sprite):
         self.center = [int(self.pos[0] + self.width / 2 * scale), int(self.pos[1] + self.height / 2 * scale)]
         self.color = (100, 0, 0)
         self.image.fill(self.color)
-        self.lin_reg = lin_reg
         self.hacker_list = []
         self.create_hacker_group()
         self.defender_list = []
         self.red_defender_num = random.randint(0, 10)
         self.green_defender_num = random.randint(0, 10)
         self.blue_defender_num = random.randint(0, 10)
-        self.create_defender_group()
+        self.database = database
+        self.create_defender_group(database)
         self.max_duration = 0
 
     def create_hacker_group(self):
         for i in range(10):
-            hacker = Hacker(self, self.scale, self.timer, self.lin_reg)
+            hacker = Hacker(self, self.scale, self.timer)
             self.hacker_list.append(hacker)
 
-    def create_defender_group(self):
+    def create_defender_group(self, database):
         self.defender_list = []
         for i in range(self.red_defender_num):
-            defender = Defender("RED", self, self.scale, (200, 0, 0), 0.03)
+            defender = Defender("RED", self, self.scale, (200, 0, 0), 0.03, database)
             self.defender_list.append(defender)
         for i in range(self.green_defender_num):
-            defender = Defender("GREEN", self, self.scale, (0, 200, 0), 0.02)
+            defender = Defender("GREEN", self, self.scale, (0, 200, 0), 0.02, database)
             self.defender_list.append(defender)
         for i in range(self.blue_defender_num):
-            defender = Defender("BLUE", self, self.scale, (0, 0, 200), 0.01)
+            defender = Defender("BLUE", self, self.scale, (0, 0, 200), 0.01, database)
             self.defender_list.append(defender)
 
     def reset_defender_group(self):
         self.red_defender_num = random.randint(0, 10)
         self.green_defender_num = random.randint(0, 10)
         self.blue_defender_num = random.randint(0, 10)
-        self.create_defender_group()
+        self.create_defender_group(self.database)
 
     def set_max_duration(self):
         for hacker in self.hacker_list:

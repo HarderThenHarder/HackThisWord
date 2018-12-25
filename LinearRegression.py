@@ -2,7 +2,6 @@
 @author: P_k_y
 """
 import numpy as np
-from DataBase import DataBase
 
 
 class LinearRegression:
@@ -20,11 +19,4 @@ class LinearRegression:
 
 
 if __name__ == '__main__':
-    data_base = DataBase([0], [0])
-    data_base.add_data([1, 1])
-    data_base.add_data([2, 1])
-
-    lr = LinearRegression()
-    lr.fit(data_base.get_X_train(), data_base.get_y_train())
-    print(lr.intercept)
-    print(lr.coefficients)
+    pass
