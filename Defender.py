@@ -32,7 +32,7 @@ class Defender(pygame.sprite.Sprite):
             if rand < self.kill_probability:
                 self.database.update_coefficient([self.site.red_defender_num, self.site.green_defender_num, self.site.blue_defender_num], hacker.duration)
                 hacker.be_killed()
-                print(self.database.defender_coefficient)
+                print("[%.3f  ,  %.3f  ,  %.3f]" % (self.database.defender_coefficient[0], self.database.defender_coefficient[1], self.database.defender_coefficient[2]))
 
     def update(self, *args):
         pass
