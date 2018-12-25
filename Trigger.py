@@ -1,19 +1,44 @@
 """
 @author: P_k_y
 """
+import random
+
 
 
 class Trigger:
 
-    def __init__(self, timer, area_config):
+    def __init__(self, timer, area_config, database):
         self.timer = timer
         self.area_config = area_config
+        self.database = database
         self.last_time = [timer.get_minute(), timer.get_second()]
         self.counter = 0
 
+    def choose_target(self):
+        max_score = self.area_config.site_list[1].red_defender_num * self.database.defender_coefficient[0] + \
+                    self.area_config.site_list[1].green_defender_num * self.database.defender_coefficient[1] + \
+                    self.area_config.site_list[1].blue_defender_num * self.database.defender_coefficient[2]
+        next_target = self.area_config.site_list[1]
+
+        for target in self.area_config.site_list:
+            tmp_score = target.red_defender_num * self.database.defender_coefficient[0] + \
+                        target.green_defender_num * self.database.defender_coefficient[1] + \
+                        target.blue_defender_num * self.database.defender_coefficient[2]
+            if max_score < tmp_score:
+                max_score = tmp_score
+                next_target = target
+
+        return next_target
+
+    def random_choose_target(self):
+        rand = random.randint(0, len(self.area_config.site_list) - 1)
+        return self.area_config.site_list[rand]
+
     def second_update(self):
-        for defender in self.area_config.site_list[1].defender_list:
-            defender.kill_intruder(self.area_config.site_list[0].hacker_list)
+        for site in self.area_config.site_list:
+            if site.who_is_attacking_me:
+                for defender in site.defender_list:
+                    defender.kill_intruder(site.who_is_attacking_me)
 
     def normal_update(self, interval):
         # Reset target
@@ -21,17 +46,22 @@ class Trigger:
         #     self.area_config.site_list[0].hacker_list[interval].set_target(self.area_config.site_list[1])
 
         # if all hacker has no target, launch a new attack
-        all_hacker_has_no_target = True
-        for hacker in self.area_config.site_list[0].hacker_list:
-            if hacker.target:
-                all_hacker_has_no_target = False
-        if all_hacker_has_no_target:
-            for hacker in self.area_config.site_list[0].hacker_list:
-                hacker.set_target(self.area_config.site_list[1])
+        for site in self.area_config.site_list:
+            all_hacker_has_no_target = True
+            for hacker in site.hacker_list:
+                if hacker.target:
+                    all_hacker_has_no_target = False
+            if all_hacker_has_no_target:
+                for hacker in site.hacker_list:
+                    if random.random() > 0.9:
+                        hacker.set_target(self.choose_target())
+                    else:
+                        hacker.set_target(self.random_choose_target())
 
         # update Hacker
-        for hacker in self.area_config.site_list[0].hacker_list:
-            hacker.update()
+        for site in self.area_config.site_list:
+            for hacker in site.hacker_list:
+                hacker.update()
 
         # update Site
         for site in self.area_config.site_list:

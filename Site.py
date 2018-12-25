@@ -20,7 +20,7 @@ class Site(pygame.sprite.Sprite):
         self.image = pygame.Surface([int(self.width * scale), int(self.height * scale)])
         self.pos = pos
         self.center = [int(self.pos[0] + self.width / 2 * scale), int(self.pos[1] + self.height / 2 * scale)]
-        self.color = (100, 0, 0)
+        self.color = (150, 0, 0)
         self.image.fill(self.color)
         self.hacker_list = []
         self.create_hacker_group()
@@ -31,6 +31,7 @@ class Site(pygame.sprite.Sprite):
         self.database = database
         self.create_defender_group(database)
         self.max_duration = 0
+        self.who_is_attacking_me = []
 
     def create_hacker_group(self):
         for i in range(10):
@@ -43,10 +44,10 @@ class Site(pygame.sprite.Sprite):
             defender = Defender("RED", self, self.scale, (200, 0, 0), 0.03, database)
             self.defender_list.append(defender)
         for i in range(self.green_defender_num):
-            defender = Defender("GREEN", self, self.scale, (0, 200, 0), 0.02, database)
+            defender = Defender("GREEN", self, self.scale, (0, 200, 0), 0.01, database)
             self.defender_list.append(defender)
         for i in range(self.blue_defender_num):
-            defender = Defender("BLUE", self, self.scale, (0, 0, 200), 0.01, database)
+            defender = Defender("BLUE", self, self.scale, (0, 0, 200), 0.002, database)
             self.defender_list.append(defender)
 
     def reset_defender_group(self):

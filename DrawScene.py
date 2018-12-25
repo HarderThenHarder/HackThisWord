@@ -50,12 +50,14 @@ class DrawScene:
                                                   start_draw_map_pos[1] + site.pos[1] - 25 * scale], 25 * scale,
                               site.color)
 
-        for hacker in area_config.site_list[0].hacker_list:
-            if hacker.target:
-                Pencil.draw_line(screen,
-                                 [start_draw_map_pos[0] + hacker.pos[0], start_draw_map_pos[1] + hacker.pos[1]],
-                                 [start_draw_map_pos[0] + hacker.target.center[0],
-                                  start_draw_map_pos[1] + hacker.target.center[1]], hacker.color, width=2)
+        for site in area_config.site_list:
+            for hacker in site.hacker_list:
+                if hacker.target:
+                    Pencil.draw_line(screen,
+                                     [start_draw_map_pos[0] + hacker.pos[0], start_draw_map_pos[1] + hacker.pos[1]],
+                                     [start_draw_map_pos[0] + hacker.target.center[0],
+                                      start_draw_map_pos[1] + hacker.target.center[1]], hacker.color, width=2)
 
-        for defender in (area_config.site_list[1].defender_list + area_config.site_list[2].defender_list):
-            screen.blit(defender.image, [start_draw_map_pos[0] + defender.pos[0], start_draw_map_pos[1] + defender.pos[1]])
+        for site in area_config.site_list:
+            for defender in site.defender_list:
+                screen.blit(defender.image, [start_draw_map_pos[0] + defender.pos[0], start_draw_map_pos[1] + defender.pos[1]])

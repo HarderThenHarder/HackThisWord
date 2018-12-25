@@ -43,7 +43,7 @@ def main():
     area_config = AreaConfig(scale, timer, data_base)
 
     # Create Trigger
-    trigger = Trigger(timer, area_config)
+    trigger = Trigger(timer, area_config, data_base)
 
     while True:
         clock.tick(30)

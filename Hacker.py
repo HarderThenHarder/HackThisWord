@@ -26,6 +26,8 @@ class Hacker(pygame.sprite.Sprite):
         self.state = "ON "
         self.duration = [0, 0]
         self.start_time = [self.timer.get_minute(), self.timer.get_second()]
+        if self.site not in target.who_is_attacking_me:
+            target.who_is_attacking_me.append(self.site)
 
     def be_killed(self):
         self.target = None
