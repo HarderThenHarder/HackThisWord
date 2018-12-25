@@ -20,7 +20,7 @@ class Site(pygame.sprite.Sprite):
         self.image = pygame.Surface([int(self.width * scale), int(self.height * scale)])
         self.pos = pos
         self.center = [int(self.pos[0] + self.width / 2 * scale), int(self.pos[1] + self.height / 2 * scale)]
-        self.color = (150, 0, 0)
+        self.color = (200, 0, 0)
         self.image.fill(self.color)
         self.hacker_list = []
         self.create_hacker_group()

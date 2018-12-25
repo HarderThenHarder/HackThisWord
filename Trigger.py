@@ -53,7 +53,7 @@ class Trigger:
                     all_hacker_has_no_target = False
             if all_hacker_has_no_target:
                 for hacker in site.hacker_list:
-                    if random.random() > 0.9:
+                    if random.random() > 0.1:
                         hacker.set_target(self.choose_target())
                     else:
                         hacker.set_target(self.random_choose_target())
