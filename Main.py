@@ -7,6 +7,7 @@ from DrawScene import DrawScene
 from Pencil import Pencil
 from Timer import Timer
 from Trigger import Trigger
+from sys import exit
 
 
 def main():
@@ -20,7 +21,7 @@ def main():
     whole_map_size = [int(2560 * scale * map_scale), int(1376 * scale * map_scale)]
 
     # Create background
-    screen = pygame.display.set_mode(SCREEN_WIDTH_HEIGHT, RESIZABLE, 32)
+    screen = pygame.display.set_mode(SCREEN_WIDTH_HEIGHT, NOFRAME, 32)
     pygame.display.set_caption("Hack This Word v1.0")
     bg = pygame.image.load("img/word_bg.jpg")
     bg = pygame.transform.scale(bg, whole_map_size)
@@ -45,6 +46,8 @@ def main():
     # Create Trigger
     trigger = Trigger(timer, area_config, data_base)
 
+    # time.sleep(5)
+
     while True:
         clock.tick(30)
         since = time.time()
@@ -63,6 +66,7 @@ def main():
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
+                exit()
 
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:

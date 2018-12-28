@@ -53,7 +53,7 @@ class Trigger:
                     all_hacker_has_no_target = False
             if all_hacker_has_no_target:
                 for hacker in site.hacker_list:
-                    if random.random() > 0.1:
+                    if random.random() > 0:
                         hacker.set_target(self.choose_target())
                     else:
                         hacker.set_target(self.random_choose_target())
@@ -78,7 +78,7 @@ class Trigger:
             self.counter += 1
 
         # 20 seconds is an iteration
-        if self.counter == 20:
+        if self.counter == 10:
             self.area_config.site_list[1].reset_defender_group()
             # kill all hackers
             for hacker in self.area_config.site_list[0].hacker_list:
